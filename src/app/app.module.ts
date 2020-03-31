@@ -10,7 +10,8 @@ import { OutputComponent } from './components/output/output.component';
   declarations: [
     AppComponent,
     InputComponent,
-    OutputComponent
+    OutputComponent,
+
   ],
   imports: [
     BrowserModule,

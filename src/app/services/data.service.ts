@@ -8,17 +8,15 @@ export class DataService {
   constructor() { }
 
   private data;
-  private message;
-  private lastState;
+  private errorMessage;
 
-  setData(data,messaje,lastState){
+  setData(data,errorMessage){
     this.data= data;
-    this.message=messaje;
-    this.lastState = lastState;
+    this.errorMessage = errorMessage;
   }
 
   getData(){
-    let temp = [this.data, this.message, this.lastState];
+    let temp = [this.data, this.errorMessage];
     this.clearData();
     return temp;
   }

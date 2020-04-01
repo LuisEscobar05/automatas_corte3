@@ -36,6 +36,10 @@ export class StackService {
     console.log(this.stack);
   }
 
+  clear()
+  {
+    this.stack =[]
+  }
 
 
 }

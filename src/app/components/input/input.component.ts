@@ -37,15 +37,17 @@ export class InputComponent implements OnInit {
         this.dataService.setData(this.transiciones, this.errorMessage);
         this.iterator = 0;
         this.transiciones = [];
+        this.pila.clear();
       } else {
-        this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+        this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser public";
         this.dataService.setData(this.transiciones, this.errorMessage);
         this.router.navigateByUrl('/salida');
         this.iterator = 0;
         this.transiciones = [];
+        this.pila.clear();
       }
     }else{
-      this.errorMessage = "Ingrese algo" ;
+      this.errorMessage = "No ingreso nada" ;
       this.dataService.setData(this.transiciones, this.errorMessage);
       this.router.navigateByUrl('/salida');
       this.iterator = 0;
@@ -66,7 +68,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarConectarMySQL();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -79,7 +81,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarCuerpo();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -120,7 +122,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarComponente1();
     }else{
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -157,7 +159,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarIdenti1();
     }else{
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -174,7 +176,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarAsignacion();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -187,7 +189,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarNull();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -200,7 +202,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarTerminacion();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -213,7 +215,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarComponente2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -282,7 +284,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarLLave();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -299,16 +301,16 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarSubcomponente2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
   validarSubcomponente2_1() {
-    this.message = "sale: " + this.pila.peek();
-    this.pila.pop()//pop a {
-    this.transicion = ["" + this.pila.stack, this.message];
-    this.transiciones.push(this.transicion);
     if (this.auxiCadena[this.iterator].match(/^Class.forName$/)) {
+      this.message = "sale: " + this.pila.peek();
+      this.pila.pop()//pop a subcomponente2_1
+      this.transicion = ["" + this.pila.stack, this.message];
+      this.transiciones.push(this.transicion);
       this.pila.push("complemento2_1");
       this.message = "entra: " + this.pila.peek();
       this.transicion = ["" + this.pila.stack, this.message];
@@ -336,7 +338,7 @@ export class InputComponent implements OnInit {
       this.iterator++;
       this.validarParentesis1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -347,13 +349,13 @@ export class InputComponent implements OnInit {
     this.transiciones.push(this.transicion);
     if (this.auxiCadena[this.iterator] == "(") {
       this.iterator++;
-      this.message = "entra: " + this.pila.peek();
+      this.message = "sale: " + this.pila.peek();
       this.pila.pop()//pop a (
       this.transicion = ["" + this.pila.stack, this.message];
       this.transiciones.push(this.transicion);
       this.validarDriver();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -361,14 +363,16 @@ export class InputComponent implements OnInit {
     if (this.auxiCadena[this.iterator].match(/^com.mysql.jdbc.Driver$/)) {
       this.iterator++;
       this.message = "sale: " + this.pila.peek();
-      this.pila.pop()//pop a driver;
+      this.pila.pop();//pop a driver;
+      this.transicion = ["" + this.pila.stack, this.message];
+      this.transiciones.push(this.transicion);
       this.pila.push("com.mysql.jdbc.Driver");
       this.message = "entra: " + this.pila.peek();
       this.transicion = ["" + this.pila.stack, this.message];
       this.transiciones.push(this.transicion);
       this.validarParentesis2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -385,7 +389,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPunto_Coma();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -398,12 +402,16 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarComplemento2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
   validarComplemento2_1() {
     if (this.validarIdentificador()) {
+      this.message = "sale: " + this.pila.peek();
+      this.pila.pop()//pop a Complemento2_1
+      this.transicion = ["" + this.pila.stack, this.message];
+      this.transiciones.push(this.transicion);
       this.pila.push(";");
       this.message = "entra: " + this.pila.peek();
       this.transicion = ["" + this.pila.stack, this.message];
@@ -456,10 +464,14 @@ export class InputComponent implements OnInit {
       this.message = "entra: " + this.pila.peek();
       this.transicion = ["" + this.pila.stack, this.message];
       this.transiciones.push(this.transicion);
+      this.pila.push("identificador");
+      this.message = "entra: " + this.pila.peek();
+      this.transicion = ["" + this.pila.stack, this.message];
+      this.transiciones.push(this.transicion);
       this.iterator++;
       this.validarIgual();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -476,7 +488,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesis2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -489,7 +501,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarConnection2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -502,7 +514,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesis2_2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -515,7 +527,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarDriverManager();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -528,7 +540,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesisComplemento2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -541,7 +553,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarUrl();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -554,7 +566,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarComa1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -567,7 +579,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarUser();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -580,7 +592,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarComa2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -593,7 +605,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPass();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -606,7 +618,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesisComplemento2_2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -619,7 +631,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPunto_ComaFinalComplemento();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -632,7 +644,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarLLaveCierreSubComponente2_1();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -645,7 +657,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarCatch();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -658,7 +670,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesisComponente2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -671,7 +683,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarSubComponente2_2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -702,8 +714,7 @@ export class InputComponent implements OnInit {
         this.transiciones.push(this.transicion);
         this.validarParentesisComponente2Cierre();
       } else {
-
-        this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+        this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
       }
     }
 
@@ -722,7 +733,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarLLaveComponente2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -735,7 +746,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPrintStack();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -748,7 +759,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesisPrint();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -761,7 +772,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarParentesisPrint2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -774,7 +785,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPunto_ComaPrint();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -787,7 +798,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarCierreLlaveComponente2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -800,7 +811,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarReturn();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -813,7 +824,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarIdenti2();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -826,7 +837,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarPunto_ComaCuerpo();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -839,7 +850,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.validarLlaveFinalCuerpo();
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 
@@ -851,7 +862,7 @@ export class InputComponent implements OnInit {
       this.transiciones.push(this.transicion);
       this.errorMessage = "Cadena Aceptada";
     } else {
-      this.errorMessage = "Error sintactico no coincide con la pila ----> " + this.auxiCadena[this.iterator];
+      this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser: "+ this.pila.peek();
     }
   }
 

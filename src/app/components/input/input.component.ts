@@ -39,7 +39,7 @@ export class InputComponent implements OnInit {
         this.transiciones = [];
         this.pila.clear();
       } else {
-        this.errorMessage = "Error sintactico no coincide con la pila ----> " +this.auxiCadena[this.iterator]+", Deberia ser public";
+        this.errorMessage = "Error sintactico ----> " +this.auxiCadena[this.iterator]+", Deberia ser public";
         this.dataService.setData(this.transiciones, this.errorMessage);
         this.router.navigateByUrl('/salida');
         this.iterator = 0;
